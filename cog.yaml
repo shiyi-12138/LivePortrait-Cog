@@ -33,6 +33,6 @@ build:
     - "gradio==5.1.0"
     - "huggingface_hub[cli]"
   run:
-    - huggingface-cli download KlingTeam/LivePortrait --local-dir pretrained_weights --exclude "*.git*" "README.md" "docs"
+    - pip install huggingface_hub && python -c "from huggingface_hub import snapshot_download; snapshot_download('KlingTeam/LivePortrait', local_dir='pretrained_weights', ignore_patterns=['*.git*', 'README.md', 'docs'])"
     - mkdir -p pretrained_weights/insightface/models/buffalo_l && wget -q -O /tmp/buffalo_l.zip https://github.com/deepinsight/insightface/releases/download/v0.7/buffalo_l.zip && unzip -qo /tmp/buffalo_l.zip -d pretrained_weights/insightface/models/buffalo_l/ && rm /tmp/buffalo_l.zip
 predict: "predict.py:Predictor"
