@@ -5,7 +5,7 @@ from pathlib import Path
 import cv2
 import numpy as np
 import torch
-from cog import BasePredictor, Input, Path as CogPath
+from cog import BasePredictor, Input, Path
 
 from src.config.argument_config import ArgumentConfig
 from src.config.inference_config import InferenceConfig
@@ -36,9 +36,9 @@ class Predictor(BasePredictor):
 
     def predict(
         self,
-        source_image: CogPath = Input(description="Source portrait image (face photo)"),
-        driving_video: CogPath = Input(description="Driving video with expressions to mimic"),
-    ) -> CogPath:
+        source_image: Path = Input(description="Source portrait image (face photo)"),
+        driving_video: Path = Input(description="Driving video with expressions to mimic"),
+    ) -> Path:
         """Animate the source portrait using expressions from the driving video"""
         output_dir = tempfile.mkdtemp()
 
@@ -56,4 +56,4 @@ class Predictor(BasePredictor):
         print(f"Processing driving: {args.driving}")
         wfp, wfp_concat = self.pipeline.execute(args)
 
-        return CogPath(Path(wfp))
+        return Path(Path(wfp))
